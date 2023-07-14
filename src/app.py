@@ -11,6 +11,8 @@ from api.models import db
 from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
+from flask_jwt_extended import JWTManager
+import datetime
 
 #from models import Person
 
@@ -32,6 +34,11 @@ db.init_app(app)
 
 # Allow CORS requests to this API
 CORS(app)
+
+app.config["JWT_SECRET_KEY"] = "SUPERMEGACONTRASEÑADEYARUMIS"  # Change this!
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = datetime.timedelta(minutes=45)
+
+jwt = JWTManager(app)
 
 # add the admin
 setup_admin(app)

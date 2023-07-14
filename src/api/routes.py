@@ -26,16 +26,28 @@ def handle_hello():
 
 @api.route('/registro', methods=['POST'])
 def new_user():
-    body = request.json  # lo que viene del request como un dic de python 🦎
+    body = request.json  # lo que viene del request como un diccionario de Python
+
     try:
-        new_user = User(body['username'], body['email'],
-                        body['password'])
+        username = body.get('username')
+        email = body.get('email')
+        password = body.get('password')
+
+        if not username or not email or not password:
+            return jsonify({"message": "Faltan campos obligatorios"}), 400
+
+        password_hash = hashlib.md5(password.encode('utf-8')).hexdigest()
+
+        new_user = User(username, email, password_hash)
         print(new_user)
+
         db.session.add(new_user)
         db.session.commit()
+
         return jsonify(new_user.serialize()), 200
     except Exception as err:
-        return jsonify({"message": "Ah ocurrido un error inesperado ‼️" + str(err)}), 500
+        return jsonify({"message": "Ha ocurrido un error inesperado ‼️" + str(err)}), 500
+
 
 @api.route('/login', methods=['POST'])
 def login():
@@ -43,19 +55,15 @@ def login():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
 
-    # Verifica el cuerpo de la solicitud
     if username is None or password is None or email is None:
         return jsonify({"msg": "Bad username, email, or password ⛔️"}), 401
 
-    # Busca usuario existente por nombre de usuario
-    search_user = User.query.filter_by(username=username).first()
+    search_user = User.query.filter_by(username=username).one_or_none()
     if search_user is None:
-        # Busca usuario existente por correo electrónico
-        search_user = User.query.filter_by(email=email).first()
+        search_user = User.query.filter_by(email=email).one_or_none()
         if search_user is None:
             return jsonify({"message": "User not found "}), 404
 
-    # Verifica que la contraseña sea correcta
     password_hash = hashlib.md5(password.encode('utf-8')).hexdigest()
     if search_user.password == password_hash:
         return jsonify({
@@ -64,5 +72,4 @@ def login():
             "idUser": search_user.id
         }), 200
 
-    # Manejo de error para contraseña incorrecta
     return jsonify({"message": "Incorrect password, please try again 🔓️"}), 401
