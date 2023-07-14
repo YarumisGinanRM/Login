@@ -5,3 +5,19 @@
     one more css for each page that will contain the selected used 
     on that page only (the ones not reused in other pages).
 */
+
+.divider:after,
+.divider:before {
+content: "";
+flex: 1;
+height: 1px;
+background: #eee;
+}
+.h-custom {
+height: calc(100% - 73px);
+}
+@media (max-width: 450px) {
+.h-custom {
+height: 100%;
+}
+}

@@ -3,17 +3,18 @@ import { Link } from "react-router-dom";
 
 export const Navbar = () => {
 	return (
-		<nav className="navbar navbar-light bg-light">
-			<div className="container">
-				<Link to="/">
-					<span className="navbar-brand mb-0 h1">React Boilerplate</span>
-				</Link>
-				<div className="ml-auto">
-					<Link to="/demo">
-						<button className="btn btn-primary">Check the Context in action</button>
-					</Link>
+		<div
+			className="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-4 px-4 px-xl-5 bg-primary">
+			{/* <!-- Copyright --> */}
+			<Link to={"/"}>
+				<div className="text-white ms-5">
+					<i className="fa-solid fa-user-plus my-2 fs-4"> LOGO</i>
 				</div>
-			</div>
-		</nav>
+			</Link>
+			<Link to={"/registro"}>
+				<button type="button" className="btn btn-light col-12 px-5 me-5">Register</button>
+			</Link>
+			{/* <!-- Right --> */}
+		</div>
 	);
 };
