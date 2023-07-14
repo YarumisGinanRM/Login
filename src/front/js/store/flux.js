@@ -79,13 +79,40 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			logOut: () => {
-				setStore({ token: null, user: null,  idUser: null });
+				setStore({ token: null, user: null, idUser: null });
 				sessionStorage.removeItem('token');
 				sessionStorage.removeItem('user');
 				sessionStorage.removeItem('idUser');
 			},
 
-		
+			newUser: async (user) => {
+				try {
+					console.log(user);
+
+					const respUser = await fetch(process.env.BACKEND_URL + "/api/registro", {
+						method: "POST",
+						mode: "cors",
+						headers: {
+							"Content-Type": "application/json",
+						},
+						body: JSON.stringify(user)
+					});
+
+					const data = await respUser.json();
+					console.log(data);
+
+					if (respUser.status === 200) {
+						return true;
+					}
+
+					return false;
+				} catch (error) {
+					console.log("Error adding new user", error);
+					return false;
+				}
+			}
+
+
 		}
 	};
 };
