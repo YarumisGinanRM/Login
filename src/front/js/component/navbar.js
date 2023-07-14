@@ -11,7 +11,7 @@ export const Navbar = () => {
 					<i className="fa-solid fa-user-plus my-2 fs-4"> LOGO</i>
 				</div>
 			</Link>
-			<Link to={"/registro"}>
+			<Link to={"/bienvenido"}>
 				<button type="button" className="btn btn-light col-12 px-5 me-5">Register</button>
 			</Link>
 			{/* <!-- Right --> */}
