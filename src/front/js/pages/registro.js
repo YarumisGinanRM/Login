@@ -33,7 +33,7 @@ export const Registro = () => {
 			console.log(resp)
 			if (resp === true) {
 				alert("te haz registrado con éxito!");
-				navigate("/login");
+				navigate("/");
 			} else {
 				alert("Intente de nuevo.");
 			}
@@ -113,7 +113,7 @@ export const Registro = () => {
 												</div>
 
 												<div className="d-flex justify-content-center col-12 mb-3 mb-lg-4">
-													<button type="submit" onClick={() => insertNewUser()} className="btn btn-primary col-12 btn-lg">Register</button>
+													<button type="submit" onClick={(e) =>{e.preventDefault(); insertNewUser()}} className="btn btn-primary col-12 btn-lg">Register</button>
 												</div>
 
 											</form>

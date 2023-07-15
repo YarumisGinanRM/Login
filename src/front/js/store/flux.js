@@ -87,7 +87,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			newUser: async (user) => {
 				try {
-					console.log(user);
 
 					const respUser = await fetch(process.env.BACKEND_URL + "/api/registro", {
 						method: "POST",
@@ -97,10 +96,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						},
 						body: JSON.stringify(user)
 					});
-
-					const data = await respUser.json();
-					console.log(data);
-
+					console.log(respUser)
 					if (respUser.status === 200) {
 						return true;
 					}

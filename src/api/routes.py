@@ -39,10 +39,10 @@ def new_user():
         password_hash = hashlib.md5(password.encode('utf-8')).hexdigest()
 
         new_user = User(username, email, password_hash)
-        print(new_user)
 
         db.session.add(new_user)
         db.session.commit()
+        print(new_user.serialize())
 
         return jsonify(new_user.serialize()), 200
     except Exception as err:
